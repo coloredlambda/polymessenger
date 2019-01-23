@@ -1,13 +1,14 @@
 const fastify = require("fastify");
 const dotenv = require("dotenv");
+const Ajv = require("ajv");
 const auth = require("fastify-bearer-auth");
 const routes = require("./routes");
 const swaggerOptions = require("./config/swagger");
 
+
 dotenv.load();
 
 const keys = new Set([process.env.SECURITY_KEY]);
-
 
 const server = fastify({
     logger: true
