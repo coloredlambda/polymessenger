@@ -1,11 +1,12 @@
 const fastify = require("fastify");
 const dotenv = require("dotenv");
+const auth = require("fastify-bearer-auth");
 const routes = require("./routes");
 const swaggerOptions = require("./config/swagger");
-const auth = require("./middlewares/auth");
-
 
 dotenv.load();
+
+const keys = new Set([process.env.SECURITY_KEY]);
 
 
 const server = fastify({
@@ -15,8 +16,8 @@ const server = fastify({
 // Register Swagger
 server.register(require("fastify-swagger"), swaggerOptions);
 
-server.use(auth);
-
+// Registering authentication scheme
+server.register(auth, { keys });
 
 // Setting routes
 routes.forEach(route => {
