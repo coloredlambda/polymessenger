@@ -16,10 +16,12 @@ module.exports =  [
         handler: smsController.sendSMS,
         schema: sendSMSSchema
     },
-    {
+    /*{
         method: "POST",
         url: "/api/v1/email",
-        handler: null,
+        handler: async () => {
+            return { success: true, message: "Email building in progress"}
+        },
         schema: sendEmailSchema
-    }
+    }*/
 ];
