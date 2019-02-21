@@ -1,20 +1,20 @@
 const fastify = require("fastify");
 const dotenv = require("dotenv");
-const Ajv = require("ajv");
 const auth = require("fastify-bearer-auth");
 const routes = require("./routes");
 const swaggerOptions = require("./config/swagger");
 
-
+// Loading environment vars
 dotenv.load();
 
+// Loading authentication keys..
 const keys = new Set([process.env.SECURITY_KEY]);
 
 const server = fastify({
     logger: true
 });
 
-// Register Swagger
+// Registering Swagger for generating API documentation
 server.register(require("fastify-swagger"), swaggerOptions);
 
 // Registering authentication scheme
@@ -30,7 +30,6 @@ const start = async () => {
     try{
         await server.listen(process.env.PORT);
         server.swagger();
-        console.log("Server starting");
     }catch(err){
         server.log.error(err);
         process.exit(1)
